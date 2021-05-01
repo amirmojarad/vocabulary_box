@@ -1,16 +1,9 @@
-class Lessons {
-  String words;
-  List<String> meanings;
+import 'package:vocabulary_box/business_logic/models/lesson.dart';
 
-  Lessons.fromJson(Map<String, dynamic> json) {
-    this.words = json['words'];
-    this.meanings = json['meanings'] as List<String>;
-  }
+class Lessons {
+  List<Lesson> lessons;
 
   Lessons() {
-    this.meanings = [];
+    this.lessons = [];
   }
-
-
-
 }
