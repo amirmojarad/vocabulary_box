@@ -9,7 +9,8 @@ class _LessonsLayoutState extends State<LessonsLayout> {
   @override
   Widget build(BuildContext context) {
     return Container(
-
+      color: Theme.of(context).backgroundColor,
+      child: Column(),
     );
   }
 }

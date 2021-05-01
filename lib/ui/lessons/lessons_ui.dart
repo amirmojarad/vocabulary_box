@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:vocabulary_box/ui/lessons/lessons_layout.dart';
 
@@ -12,7 +10,7 @@ class _LessonsUIState extends State<LessonsUI> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(backgroundColor: Theme.of(context).backgroundColor),
       body: LessonsLayout(),
     );
   }
