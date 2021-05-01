@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vocabulary_box/ui/lessons/lessons_ui.dart';
 
 class VocabularyBox extends StatefulWidget {
   @override
@@ -8,6 +9,10 @@ class VocabularyBox extends StatefulWidget {
 class _VocabularyBoxState extends State<VocabularyBox> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return MaterialApp(
+      darkTheme: ThemeData(),
+      theme: ThemeData(),
+      home: LessonsUI(),
+    );
   }
 }
