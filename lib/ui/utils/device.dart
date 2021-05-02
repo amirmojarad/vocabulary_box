@@ -11,3 +11,5 @@ class Device {
     this.orientation = MediaQuery.of(context).orientation;
   }
 }
+
+Device device;
