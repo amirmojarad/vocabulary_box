@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabulary_box/ui/lessons/lessons_layout.dart';
 import 'package:vocabulary_box/ui/lessons/widgets/app_bar.dart';
