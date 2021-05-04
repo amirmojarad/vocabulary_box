@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:vocabulary_box/business_logic/models/lesson.dart';
-import 'package:vocabulary_box/business_logic/view_models/lesson_provider.dart';
-
+import 'package:vocabulary_box/models/lesson.dart';
 class LessonLayout extends StatefulWidget {
   Lesson lesson;
 
@@ -15,12 +12,9 @@ class LessonLayout extends StatefulWidget {
 class _LessonLayoutState extends State<LessonLayout> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => LessonProvider(),
-      child: SafeArea(
-          child: Container(
-        color: Theme.of(context).backgroundColor,
-      )),
-    );
+    return SafeArea(
+        child: Container(
+      color: Theme.of(context).backgroundColor,
+    ));
   }
 }

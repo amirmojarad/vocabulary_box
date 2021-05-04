@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vocabulary_box/business_logic/models/lesson.dart';
+import 'package:vocabulary_box/models/lesson.dart';
 import 'package:vocabulary_box/ui/lesson/lesson_layout.dart';
 
 class LessonUI extends StatefulWidget {

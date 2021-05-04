@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:vocabulary_box/business_logic/models/lesson.dart';
+import 'package:vocabulary_box/models/lesson.dart';
 import 'package:vocabulary_box/ui/lesson/lesson_ui.dart';
 import 'package:vocabulary_box/ui/utils/device.dart';
 import 'package:vocabulary_box/ui/utils/colors.dart' as colors;
