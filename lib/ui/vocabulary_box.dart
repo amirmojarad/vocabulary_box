@@ -21,8 +21,10 @@ class _VocabularyBoxState extends State<VocabularyBox> {
         dividerColor: colors.divider,
         buttonColor: colors.button,
         primaryIconTheme: IconThemeData(color: Color(0xff131313), size: 30),
-        textTheme:
-            TextTheme(subtitle1: fonts.subtitle1, bodyText1: fonts.bodyText1),
+        textTheme: TextTheme(
+            subtitle1: fonts.subtitle1,
+            bodyText1: fonts.bodyText1,
+            bodyText2: fonts.bodyText2),
       ),
       home: FutureBuilder(
         builder: (context, snapshot) {

@@ -11,3 +11,8 @@ const TextStyle bodyText1 = TextStyle(
     fontSize: 18,
     color: colors.text,
     fontWeight: FontWeight.w500);
+const TextStyle bodyText2 = TextStyle(
+    fontFamily: 'PoppinsMedium',
+    fontSize: 16,
+    color: colors.text,
+    fontWeight: FontWeight.w600);
