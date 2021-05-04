@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:vocabulary_box/blocs/lessons_bloc.dart';
-import 'package:vocabulary_box/models/lesson.dart';
+import 'package:vocabulary_box/blocs/controllers/bottom_modal_sheet_controller.dart';
 import 'package:vocabulary_box/ui/utils/device.dart';
 import 'package:vocabulary_box/ui/utils/colors.dart' as colors;
 
 void buildBottomModalSheet(BuildContext context, Function setState) {
-  TextEditingController controller = TextEditingController();
+  BottomSheetController controller = BottomSheetController();
   showModalBottomSheet(
     backgroundColor: Colors.transparent,
     context: context,
@@ -33,15 +32,9 @@ void buildBottomModalSheet(BuildContext context, Function setState) {
                   const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
               child: Container(
                 child: TextFormField(
-                  onFieldSubmitted: (value) async {
-                    var newLesson =
-                        Lesson.withAttributes(controller.text, 0, []);
-                    lessonBloc.jsonProvider.addLesson(newLesson);
-                    await lessonBloc.save();
-                    FocusScope.of(context).unfocus();
-                    Navigator.pop(context);
-                  },
-                  controller: controller,
+                  onFieldSubmitted: (value) async =>
+                      await controller.addNewLesson(context),
+                  controller: controller.controller,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: colors.deActiveBorder),
@@ -64,13 +57,7 @@ void buildBottomModalSheet(BuildContext context, Function setState) {
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: GestureDetector(
-                onTap: () async {
-                  var newLesson = Lesson.withAttributes(controller.text, 0, []);
-                  lessonBloc.jsonProvider.addLesson(newLesson);
-                  await lessonBloc.save();
-                  FocusScope.of(context).unfocus();
-                  Navigator.pop(context);
-                },
+                onTap: () async => await controller.addNewLesson(context),
                 child:
                     Text("Add", style: Theme.of(context).textTheme.bodyText1),
               ),
@@ -86,7 +73,5 @@ void buildBottomModalSheet(BuildContext context, Function setState) {
         height: 200,
       );
     },
-  ).then((value) {
-    setState();
-  });
+  );
 }
