@@ -19,6 +19,7 @@ dependencies:
   flutter_slidable: ^0.6.0
   rxdart: ^0.26.0
   path: ^1.8.0
+  path_provider: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -28,6 +29,10 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+
+  assets:
+    - assets/lessons.json
+
   fonts:
     - family: PoppinsRegular
       fonts:

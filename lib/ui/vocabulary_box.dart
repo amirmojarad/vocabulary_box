@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:vocabulary_box/blocs/lessons_bloc.dart';
 import 'package:vocabulary_box/ui/lessons/lessons_ui.dart';
 import 'package:vocabulary_box/ui/utils/colors.dart' as colors;
 import 'package:vocabulary_box/ui/utils/fonts.dart' as fonts;
@@ -24,7 +24,21 @@ class _VocabularyBoxState extends State<VocabularyBox> {
         textTheme:
             TextTheme(subtitle1: fonts.subtitle1, bodyText1: fonts.bodyText1),
       ),
-      home: LessonsUI(),
+      home: FutureBuilder(
+        builder: (context, snapshot) {
+          print(snapshot.hasData);
+          if (snapshot.hasData)
+            return LessonsUI();
+          else
+            return Container(
+              color: Theme.of(context).backgroundColor,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+        },
+        future: lessonBloc.fetch(),
+      ),
     );
   }
 }
