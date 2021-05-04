@@ -14,7 +14,9 @@ class _LessonsUIState extends State<LessonsUI> {
   Widget build(BuildContext context) {
     device = Device(context);
     return Scaffold(
-      floatingActionButton: buildFloatingButton(context),
+      floatingActionButton: buildFloatingButton(context, () {
+        setState(() {});
+      }),
       appBar: buildAppBar(context),
       body: LessonsLayout(),
     );

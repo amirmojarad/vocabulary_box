@@ -19,10 +19,28 @@ class _LessonsLayoutState extends State<LessonsLayout> {
     return Container(
       color: Theme.of(context).backgroundColor,
       child: Column(
-        children: List.generate(
-            lessonBloc.jsonProvider.lessons.lessons.length,
-            (index) => makeLessonCard(
-                context, lessonBloc.jsonProvider.lessons.lessons[index])),
+        children: lessonBloc.jsonProvider.lessons.lessons.length != 0
+            ? List.generate(
+                lessonBloc.jsonProvider.lessons.lessons.length,
+                (index) {
+                  print(lessonBloc.jsonProvider.lessons.lessons.length);
+                  return makeLessonCard(
+                    context,
+                    lessonBloc.jsonProvider.lessons.lessons[index],
+                  );
+                },
+              )
+            : [
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      "List is Empty",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ),
+                ),
+              ],
       ),
     );
   }
@@ -70,7 +88,11 @@ class _LessonsLayoutState extends State<LessonsLayout> {
           caption: 'Delete',
           color: colors.delete,
           icon: Icons.delete,
-          // onTap: () => _showSnackBar('Delete'),
+          onTap: () async {
+            lessonBloc.jsonProvider.remove(lesson);
+            await lessonBloc.save();
+            setState(() {});
+          },
         ),
       ],
     );

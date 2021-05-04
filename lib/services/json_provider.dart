@@ -28,6 +28,10 @@ class JsonProvider {
   factory JsonProvider.fromJson(Map<String, dynamic> json) =>
       jsonProviderFromJson(json);
 
+  void remove(Lesson lesson) {
+    this.lessons.lessons.remove(lesson);
+  }
+
   Lessons get lessons => _lessons;
 
   JsonProvider(this._lessons, this._firstOpening, this._lastID) {

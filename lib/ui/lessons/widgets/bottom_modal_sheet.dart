@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:vocabulary_box/blocs/lessons_bloc.dart';
+import 'package:vocabulary_box/models/lesson.dart';
 import 'package:vocabulary_box/ui/utils/device.dart';
 import 'package:vocabulary_box/ui/utils/colors.dart' as colors;
 
-void buildBottomModalSheet(BuildContext context) {
+void buildBottomModalSheet(BuildContext context, Function setState) {
+  TextEditingController controller = TextEditingController();
   showModalBottomSheet(
     backgroundColor: Colors.transparent,
     context: context,
@@ -29,11 +32,16 @@ void buildBottomModalSheet(BuildContext context) {
               padding:
                   const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
               child: Container(
-                // decoration: BoxDecoration(
-                //   border: Border.all(color: colors.deActiveBorder),
-                //   borderRadius: BorderRadius.circular(12),
-                // ),
                 child: TextFormField(
+                  onFieldSubmitted: (value) async {
+                    var newLesson =
+                        Lesson.withAttributes(controller.text, 0, []);
+                    lessonBloc.jsonProvider.addLesson(newLesson);
+                    await lessonBloc.save();
+                    FocusScope.of(context).unfocus();
+                    Navigator.pop(context);
+                  },
+                  controller: controller,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: colors.deActiveBorder),
@@ -42,7 +50,8 @@ void buildBottomModalSheet(BuildContext context) {
                         EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                     border: InputBorder.none,
                     disabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: colors.activeBorder)),
+                      borderSide: BorderSide(color: colors.activeBorder),
+                    ),
                     hintText: "Lesson Title",
                     fillColor: Colors.red,
                     focusedBorder: OutlineInputBorder(
@@ -55,8 +64,16 @@ void buildBottomModalSheet(BuildContext context) {
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: GestureDetector(
-                  child: Text("Add",
-                      style: Theme.of(context).textTheme.bodyText1)),
+                onTap: () async {
+                  var newLesson = Lesson.withAttributes(controller.text, 0, []);
+                  lessonBloc.jsonProvider.addLesson(newLesson);
+                  await lessonBloc.save();
+                  FocusScope.of(context).unfocus();
+                  Navigator.pop(context);
+                },
+                child:
+                    Text("Add", style: Theme.of(context).textTheme.bodyText1),
+              ),
             ),
           ],
         ),
@@ -69,5 +86,7 @@ void buildBottomModalSheet(BuildContext context) {
         height: 200,
       );
     },
-  );
+  ).then((value) {
+    setState();
+  });
 }
