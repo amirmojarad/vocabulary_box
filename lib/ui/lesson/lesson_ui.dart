@@ -26,44 +26,79 @@ class _LessonUIState extends State<LessonUI> {
           style: Theme.of(context).textTheme.bodyText1,
         ),
         actions: [
-          // IconButton(
-          //   icon: Icon(Icons.sort),
-          //   onPressed: () {
-          //     showMenu(
-          //       context: context,
-          //       position: RelativeRect.fromLTRB(device.width - 60, 35, 50, 10),
-          //       items: <PopupMenuEntry>[
-          //         PopupMenuItem(
-          //
-          //           child: Text(
-          //             "Sort By",
-          //             style: Theme.of(context).textTheme.bodyText1,
-          //           ),
-          //         ),
-          //         PopupMenuItem(
-          //           child: Text(
-          //             "Alphabet",
-          //             style: Theme.of(context).textTheme.bodyText2,
-          //           ),
-          //           value: 1,
-          //           enabled: true,
-          //         ),
-          //         // PopupMenuItem(
-          //         //   child: Text("Alphabet"),
-          //         // )
-          //       ],
-          //     ).whenComplete(() {
-          //       print(value);
-          //     });
-          //   },
-          // )
+          IconButton(
+            icon: Icon(Icons.cleaning_services_rounded),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (_) => new AlertDialog(
+                  backgroundColor: Theme.of(context).backgroundColor,
+                  title: Text(
+                    "All words will be deleted, do you want to continue?",
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.0),
+                    ),
+                  ),
+                  content: Builder(
+                    builder: (context) {
+                      return Container(
+                        height: device.height - 800,
+                        width: device.width - 400,
+                        child: Center(
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                child: Text(
+                                  "Yes",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'PoppinsMedium',
+                                    color: Colors.lightBlue,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    widget.lesson.words.clear();
+                                  });
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              Spacer(),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  "Cancel",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: 'PoppinsMedium',
+                                      color: Colors.redAccent,
+                                      fontSize: 18),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              );
+            },
+          )
         ],
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
             color: Theme.of(context).buttonColor,
           ),
-          onPressed: () {
+          onPressed: () async {
+            await controller.save();
             Navigator.pop(context);
           },
         ),

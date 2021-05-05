@@ -19,6 +19,18 @@ class Lesson {
     };
   }
 
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Lesson &&
+          runtimeType == other.runtimeType &&
+          title == other.title &&
+          id == other.id;
+
+  @override
+  int get hashCode => title.hashCode ^ id.hashCode;
+
   factory Lesson.fromJson(Map<String, dynamic> json) => _$LessonFromJson(json);
 }
 

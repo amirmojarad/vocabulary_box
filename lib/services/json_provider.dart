@@ -15,8 +15,14 @@ class JsonProvider {
   int _lastID;
 
   void addLesson(Lesson lesson) {
-    lesson.id = ++_lastID;
-    this._lessons.lessons.add(lesson);
+    if (_lessons.lessons.contains(lesson)) {
+      var element =
+          _lessons.lessons.elementAt(_lessons.lessons.indexOf(lesson));
+      element.words = lesson.words;
+    } else {
+      lesson.id = ++_lastID;
+      this._lessons.lessons.add(lesson);
+    }
   }
 
   Map<String, dynamic> toJson() => {

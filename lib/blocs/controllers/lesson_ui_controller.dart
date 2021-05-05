@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:vocabulary_box/blocs/lessons_bloc.dart';
 import 'package:vocabulary_box/models/lesson.dart';
 import 'package:vocabulary_box/models/word.dart';
+
+import '../lessons_bloc.dart';
 
 class LessonUIController {
   TextEditingController controller = TextEditingController();
@@ -13,20 +14,28 @@ class LessonUIController {
     FocusScope.of(context).requestFocus(node);
   }
 
-  void addNewWord(BuildContext context, Lesson lesson) {
-    if (!lesson.words.contains(controller.text)) {
-      lesson.words.add(Word.withAttributes(
-          meanings: [meaningsController.text], word: controller.text));
-    } else {
-      lesson.words.forEach(
-        (element) {
-          if (element.word == controller.text) {
-            element.meanings.add(meaningsController.text);
-          }
-        },
-      );
-    }
+  Future<void> save() async {
+    lessonBloc.save();
   }
 
-  void addMeanings(BuildContext context) {}
+  void addNewWord(BuildContext context, Lesson lesson, Function function) {
+    var newWord = Word.withAttributes(
+        word: controller.text, meanings: [meaningsController.text]);
+    if (lesson.words.contains(newWord)) {
+      lesson.words
+          .elementAt(lesson.words.indexOf(newWord))
+          .meanings
+          .add(meaningsController.text);
+    } else {
+      lesson.words.add(newWord);
+    }
+    lessonBloc.jsonProvider.addLesson(lesson);
+    meaningsController.clear();
+    function();
+  }
+
+  void addMeanings(BuildContext context, Lesson lesson, Function function) {
+    addNewWord(context, lesson, function);
+    FocusScope.of(context).nextFocus();
+  }
 }

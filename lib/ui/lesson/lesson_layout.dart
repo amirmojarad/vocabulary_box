@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vocabulary_box/blocs/controllers/lesson_ui_controller.dart';
 import 'package:vocabulary_box/models/lesson.dart';
+import 'package:vocabulary_box/models/word.dart';
 import 'package:vocabulary_box/ui/utils/colors.dart' as colors;
 import 'package:vocabulary_box/ui/utils/device.dart';
 
@@ -33,16 +34,17 @@ class _LessonLayoutState extends State<LessonLayout> {
                     children: [
                       buildNewWordTextField(context,
                           hintText: "New Word",
-                          controller: controller.controller, function: () {
-                        controller.next(context);
-                      }),
+                          controller: controller.controller,
+                          function: () {}),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: buildNewWordTextField(context,
                             node: controller.node,
                             controller: controller.meaningsController,
-                            hintText: "Meanings", function: () {
-                          controller.addMeanings(context);
+                            hintText: "Meaning", function: () {
+                          controller.addMeanings(context, widget.lesson, () {
+                            setState(() {});
+                          });
                         }),
                       ),
                     ],
@@ -50,6 +52,9 @@ class _LessonLayoutState extends State<LessonLayout> {
                 ),
               ),
               GestureDetector(
+                onTap: () => controller.addNewWord(context, widget.lesson, () {
+                  setState(() {});
+                }),
                 child: Text(
                   "Add",
                   style: Theme.of(context).textTheme.bodyText1,
@@ -64,16 +69,11 @@ class _LessonLayoutState extends State<LessonLayout> {
                 ),
               ),
               widget.lesson.words.isNotEmpty
-                  ? Row(
-                      children: [
-                        Text(widget.lesson.words[0].word),
-                        Spacer(),
-                        SizedBox(
-                          height: 20,
-                          child: VerticalDivider(),
-                        ),
-                        Text(widget.lesson.words[0].meanings[0]),
-                      ],
+                  ? Column(
+                      children:
+                          List.generate(widget.lesson.words.length, (index) {
+                        return buildWordRow(widget.lesson.words[index]);
+                      }),
                     )
                   : Container()
             ],
@@ -83,19 +83,48 @@ class _LessonLayoutState extends State<LessonLayout> {
     );
   }
 
+  Widget buildWordRow(Word word) {
+    return Row(
+      children: [
+        Text(word.word),
+        Spacer(),
+        SizedBox(
+          height: 20,
+          child: VerticalDivider(),
+        ),
+        Text(word.meanings.toString()),
+      ],
+    );
+  }
+
   TextFormField buildNewWordTextField(BuildContext context,
       {Function function,
       String hintText,
       TextEditingController controller,
       FocusScopeNode node}) {
+    FocusScopeNode newNode =
+        hintText.toLowerCase().contains('word') ? FocusScopeNode() : node;
     return TextFormField(
-      // focusNode: node,
-      textInputAction: hintText.contains("word")
+      focusNode: newNode,
+      textInputAction: hintText.toLowerCase().contains("word")
           ? TextInputAction.next
           : TextInputAction.done,
       onFieldSubmitted: (value) async => await function(),
       controller: controller,
+      onChanged: (value) {
+        setState(() {});
+      },
       decoration: InputDecoration(
+        suffixIcon: controller.text.isNotEmpty
+            ? IconButton(
+                onPressed: () {
+                  setState(() {
+                    controller.clear();
+                  });
+                },
+                icon: Icon(Icons.clear),
+              )
+            : Icon(Icons.add, color: Theme.of(context).backgroundColor),
         enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: colors.deActiveBorder),
             borderRadius: BorderRadius.circular(12)),
