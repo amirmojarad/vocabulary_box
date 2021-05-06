@@ -135,11 +135,7 @@ class _LessonUIState extends State<LessonUI> {
                   ),
                 ),
               ),
-            ).then((value) => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => LessonsUI(),
-                )));
+            ).then((value) => Navigator.pop(context));
           },
         ),
         backgroundColor: Theme.of(context).backgroundColor,
