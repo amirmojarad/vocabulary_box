@@ -6,6 +6,17 @@ class Word {
 
   factory Word.fromJson(Map<String, dynamic> json) => _$WordFromJson(json);
 
+  String meaningsToString() {
+
+    String result = "";
+    meanings.forEach((element) {
+      result += element + ", ";
+    });
+    result.replaceRange(result.length - 2, result.length - 1, "");
+    if (meanings.length == 1) result.replaceAll(",", "");
+    return result;
+  }
+
   Map<String, dynamic> toJson() {
     return {
       "word": this.word,

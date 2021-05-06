@@ -16,3 +16,9 @@ const TextStyle bodyText2 = TextStyle(
     fontSize: 16,
     color: colors.text,
     fontWeight: FontWeight.w600);
+
+const TextStyle headline1 = TextStyle(
+    fontFamily: 'PoppinsBold',
+    fontSize: 24,
+    color: colors.text,
+    fontWeight: FontWeight.bold);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vocabulary_box/blocs/lessons_bloc.dart';
+import 'package:vocabulary_box/ui/lesson/lesson_ui.dart';
 import 'package:vocabulary_box/ui/lessons/lessons_ui.dart';
 import 'package:vocabulary_box/ui/utils/colors.dart' as colors;
 import 'package:vocabulary_box/ui/utils/fonts.dart' as fonts;
@@ -24,11 +25,12 @@ class _VocabularyBoxState extends State<VocabularyBox> {
         textTheme: TextTheme(
             subtitle1: fonts.subtitle1,
             bodyText1: fonts.bodyText1,
-            bodyText2: fonts.bodyText2),
+            bodyText2: fonts.bodyText2,
+            headline1: fonts.headline1),
       ),
       home: FutureBuilder(
         builder: (context, snapshot) {
-          print(snapshot.hasData);
+
           if (snapshot.hasData)
             return LessonsUI();
           else

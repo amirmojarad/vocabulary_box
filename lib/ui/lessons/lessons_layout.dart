@@ -23,8 +23,7 @@ class _LessonsLayoutState extends State<LessonsLayout> {
             ? List.generate(
                 lessonBloc.jsonProvider.lessons.lessons.length,
                 (index) {
-                  print(lessonBloc.jsonProvider.lessons.lessons.length);
-                  return makeLessonCard(
+                    return makeLessonCard(
                     context,
                     lessonBloc.jsonProvider.lessons.lessons[index],
                   );

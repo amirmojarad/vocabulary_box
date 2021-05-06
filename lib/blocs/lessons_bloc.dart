@@ -15,8 +15,9 @@ class LessonBloc {
     return jsonProvider;
   }
 
-  Future<void> save() async {
-    this._serializable.save(jsonProvider.toJson());
+  Future<bool> save() async {
+    await this._serializable.save(jsonProvider.toJson());
+    return true;
   }
 }
 

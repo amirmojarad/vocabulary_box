@@ -34,12 +34,14 @@ class _LessonLayoutState extends State<LessonLayout> {
                     children: [
                       buildNewWordTextField(context,
                           hintText: "New Word",
-                          controller: controller.controller,
-                          function: () {}),
+                          node: controller.wordNode,
+                          controller: controller.controller, function: () {
+                        controller.next(context);
+                      }),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: buildNewWordTextField(context,
-                            node: controller.node,
+                            node: controller.meaningNode,
                             controller: controller.meaningsController,
                             hintText: "Meaning", function: () {
                           controller.addMeanings(context, widget.lesson, () {
@@ -52,7 +54,7 @@ class _LessonLayoutState extends State<LessonLayout> {
                 ),
               ),
               GestureDetector(
-                onTap: () => controller.addNewWord(context, widget.lesson, () {
+                onTap: () => controller.addMeanings(context, widget.lesson, () {
                   setState(() {});
                 }),
                 child: Text(
@@ -70,10 +72,14 @@ class _LessonLayoutState extends State<LessonLayout> {
               ),
               widget.lesson.words.isNotEmpty
                   ? Column(
-                      children:
-                          List.generate(widget.lesson.words.length, (index) {
-                        return buildWordRow(widget.lesson.words[index]);
-                      }),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: controller.makeWords(
+                        widget.lesson,
+                        context,
+                        () {
+                          setState(() {});
+                        },
+                      ),
                     )
                   : Container()
             ],
@@ -83,29 +89,14 @@ class _LessonLayoutState extends State<LessonLayout> {
     );
   }
 
-  Widget buildWordRow(Word word) {
-    return Row(
-      children: [
-        Text(word.word),
-        Spacer(),
-        SizedBox(
-          height: 20,
-          child: VerticalDivider(),
-        ),
-        Text(word.meanings.toString()),
-      ],
-    );
-  }
-
   TextFormField buildNewWordTextField(BuildContext context,
       {Function function,
       String hintText,
       TextEditingController controller,
       FocusScopeNode node}) {
-    FocusScopeNode newNode =
-        hintText.toLowerCase().contains('word') ? FocusScopeNode() : node;
     return TextFormField(
-      focusNode: newNode,
+      style: Theme.of(context).textTheme.bodyText2,
+      focusNode: node,
       textInputAction: hintText.toLowerCase().contains("word")
           ? TextInputAction.next
           : TextInputAction.done,
@@ -126,8 +117,9 @@ class _LessonLayoutState extends State<LessonLayout> {
               )
             : Icon(Icons.add, color: Theme.of(context).backgroundColor),
         enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: colors.deActiveBorder),
-            borderRadius: BorderRadius.circular(12)),
+          borderSide: BorderSide(color: colors.deActiveBorder),
+          borderRadius: BorderRadius.circular(12),
+        ),
         contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
         border: InputBorder.none,
         disabledBorder: OutlineInputBorder(

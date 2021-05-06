@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:vocabulary_box/blocs/controllers/lesson_ui_controller.dart';
+import 'package:vocabulary_box/blocs/lessons_bloc.dart';
 import 'package:vocabulary_box/models/lesson.dart';
 import 'package:vocabulary_box/ui/lesson/lesson_layout.dart';
+import 'package:vocabulary_box/ui/lessons/lessons_ui.dart';
 import 'package:vocabulary_box/ui/utils/device.dart';
 
 class LessonUI extends StatefulWidget {
@@ -27,16 +29,13 @@ class _LessonUIState extends State<LessonUI> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.cleaning_services_rounded),
+            icon: Icon(Icons.cleaning_services_rounded,
+                color: Theme.of(context).buttonColor),
             onPressed: () {
               showDialog(
                 context: context,
                 builder: (_) => new AlertDialog(
                   backgroundColor: Theme.of(context).backgroundColor,
-                  title: Text(
-                    "All words will be deleted, do you want to continue?",
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(10.0),
@@ -45,41 +44,55 @@ class _LessonUIState extends State<LessonUI> {
                   content: Builder(
                     builder: (context) {
                       return Container(
-                        height: device.height - 800,
+                        height: device.height - 700,
                         width: device.width - 400,
                         child: Center(
-                          child: Row(
+                          child: Column(
                             children: [
-                              GestureDetector(
-                                child: Text(
-                                  "Yes",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'PoppinsMedium',
-                                    color: Colors.lightBlue,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    widget.lesson.words.clear();
-                                  });
-                                  Navigator.pop(context);
-                                },
+                              Text(
+                                "All words will be deleted, do you want to continue?",
+                                style: Theme.of(context).textTheme.bodyText1,
                               ),
                               Spacer(),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text(
-                                  "Cancel",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'PoppinsMedium',
-                                      color: Colors.redAccent,
-                                      fontSize: 18),
-                                ),
+                              SizedBox(
+                                width: device.width,
+                                child: Divider(),
+                              ),
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                    child: Text(
+                                      "Yes",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'PoppinsMedium',
+                                        color: Colors.lightBlue,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                    onTap: () async {
+                                      setState(() {
+                                        widget.lesson.words.clear();
+                                      });
+                                      await controller.save();
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  Spacer(),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text(
+                                      "Cancel",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'PoppinsMedium',
+                                          color: Colors.redAccent,
+                                          fontSize: 18),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -97,9 +110,36 @@ class _LessonUIState extends State<LessonUI> {
             Icons.arrow_back_ios,
             color: Theme.of(context).buttonColor,
           ),
-          onPressed: () async {
-            await controller.save();
-            Navigator.pop(context);
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                backgroundColor: Theme.of(context).backgroundColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10.0),
+                  ),
+                ),
+                content: Builder(
+                  builder: (_) => FutureBuilder(
+                    future: lessonBloc.save(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        Navigator.pop(context);
+                      }
+                      return Container(
+                          height: device.height - 700,
+                          width: device.width - 400,
+                          child: Center(child: CircularProgressIndicator()));
+                    },
+                  ),
+                ),
+              ),
+            ).then((value) => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LessonsUI(),
+                )));
           },
         ),
         backgroundColor: Theme.of(context).backgroundColor,
