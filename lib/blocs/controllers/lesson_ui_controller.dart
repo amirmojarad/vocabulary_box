@@ -7,7 +7,7 @@ import 'package:vocabulary_box/ui/utils/device.dart';
 class LessonUIController {
   TextEditingController controller = TextEditingController();
   TextEditingController meaningsController = TextEditingController();
-  FocusScopeNode wordNode, meaningNode;
+  FocusScopeNode wordNode, meaningNode, temp;
 
   Map<String, List<Word>> alphabeticMap;
 
@@ -66,14 +66,22 @@ class LessonUIController {
     List<Widget> result = [];
     _generateAlphabetMap(lesson);
     alphabeticMap.forEach((key, value) {
-      result.add(Padding(
-        padding: const EdgeInsets.only(left: 16.0, top: 8),
-        child: Text(key, style: Theme.of(context).textTheme.headline1),
-      ));
-      result.add(Padding(
-        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 32),
-        child: SizedBox(child: Divider(), width: device.width),
-      ));
+      result.add(
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0, top: 8),
+          child: Row(
+            children: [
+              Text(key, style: Theme.of(context).textTheme.headline1),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Divider(),
+                ),
+              )
+            ],
+          ),
+        ),
+      );
       value.forEach((element) {
         result.add(buildWordRow(element, context, setState, lesson));
       });
@@ -91,37 +99,37 @@ class LessonUIController {
           lesson.words.remove(word);
           setState();
         },
-        child: Column(
-          children: [
-            Container(
-              width: device.width,
-              height: 65,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                    color: Theme.of(context).dividerColor, width: 0.5),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(word.word,
-                        style: Theme.of(context).textTheme.bodyText1),
-                    Text(word.meaningsToString(),
-                        style: Theme.of(context).textTheme.subtitle1),
-                  ],
-                ),
-              ),
+        child: Container(
+          width: device.width,
+          height: 65,
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey, blurRadius: 10, offset: Offset(3, 2)),
+            ],
+            color: Color(0xff000F1C),
+            borderRadius: BorderRadius.circular(10),
+            border:
+                Border.all(color: Theme.of(context).dividerColor, width: 0.5),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(word.word, style: Theme.of(context).textTheme.bodyText2),
+                Text(word.meaningsToString(),
+                    style: Theme.of(context).textTheme.subtitle2),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 
-  void addNewWord(BuildContext context, Lesson lesson, Function function) {
+  void addNewWord(
+      BuildContext context, Lesson lesson, Function function) async {
     if (controller.text.isEmpty || controller.text.isEmpty) {
       meaningsController.clear();
       controller.clear();
@@ -143,11 +151,12 @@ class LessonUIController {
     }
     lessonBloc.jsonProvider.addLesson(lesson);
     meaningsController.clear();
+    await save();
     function();
   }
 
   void addMeanings(BuildContext context, Lesson lesson, Function function) {
     addNewWord(context, lesson, function);
-    FocusScope.of(context).nextFocus();
+    FocusScope.of(context).requestFocus(temp);
   }
 }

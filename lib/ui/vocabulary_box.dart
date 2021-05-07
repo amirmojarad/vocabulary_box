@@ -21,16 +21,17 @@ class _VocabularyBoxState extends State<VocabularyBox> {
         accentColor: colors.accent,
         dividerColor: colors.divider,
         buttonColor: colors.button,
-        primaryIconTheme: IconThemeData(color: Color(0xff131313), size: 30),
+        primaryIconTheme: IconThemeData(color: Color(0xffDBFDE8), size: 30),
         textTheme: TextTheme(
-            subtitle1: fonts.subtitle1,
-            bodyText1: fonts.bodyText1,
-            bodyText2: fonts.bodyText2,
-            headline1: fonts.headline1),
+          subtitle1: fonts.subtitle1,
+          bodyText1: fonts.bodyText1,
+          bodyText2: fonts.bodyText2,
+          headline1: fonts.headline1,
+          subtitle2: fonts.subtitle2,
+        ),
       ),
       home: FutureBuilder(
         builder: (context, snapshot) {
-
           if (snapshot.hasData)
             return LessonsUI();
           else

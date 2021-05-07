@@ -3,7 +3,6 @@ import 'package:vocabulary_box/blocs/controllers/lesson_ui_controller.dart';
 import 'package:vocabulary_box/blocs/lessons_bloc.dart';
 import 'package:vocabulary_box/models/lesson.dart';
 import 'package:vocabulary_box/ui/lesson/lesson_layout.dart';
-import 'package:vocabulary_box/ui/lessons/lessons_ui.dart';
 import 'package:vocabulary_box/ui/utils/device.dart';
 
 class LessonUI extends StatefulWidget {
@@ -30,7 +29,7 @@ class _LessonUIState extends State<LessonUI> {
         actions: [
           IconButton(
             icon: Icon(Icons.cleaning_services_rounded,
-                color: Theme.of(context).buttonColor),
+                color: Theme.of(context).accentColor),
             onPressed: () {
               showDialog(
                 context: context,
@@ -66,7 +65,7 @@ class _LessonUIState extends State<LessonUI> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontFamily: 'PoppinsMedium',
-                                        color: Colors.lightBlue,
+                                        color: Theme.of(context).accentColor,
                                         fontSize: 18,
                                       ),
                                     ),
@@ -108,7 +107,7 @@ class _LessonUIState extends State<LessonUI> {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
-            color: Theme.of(context).buttonColor,
+            color: Theme.of(context).accentColor,
           ),
           onPressed: () {
             showDialog(

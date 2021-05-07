@@ -31,14 +31,19 @@ class _LessonLayoutState extends State<LessonLayout> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      buildNewWordTextField(context,
-                          hintText: "New Word",
-                          node: controller.wordNode,
-                          controller: controller.controller, function: () {
-                        controller.next(context);
-                      }),
                       Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 8),
+                        child: buildNewWordTextField(context,
+                            hintText: "New Word",
+                            node: controller.wordNode,
+                            controller: controller.controller, function: () {
+                          controller.next(context);
+                        }),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(top: 8.0, left: 8, right: 8),
                         child: buildNewWordTextField(context,
                             node: controller.meaningNode,
                             controller: controller.meaningsController,
@@ -94,7 +99,7 @@ class _LessonLayoutState extends State<LessonLayout> {
       TextEditingController controller,
       FocusScopeNode node}) {
     return TextFormField(
-      style: Theme.of(context).textTheme.bodyText2,
+      style: Theme.of(context).textTheme.bodyText1,
       focusNode: node,
       textInputAction: hintText.toLowerCase().contains("word")
           ? TextInputAction.next

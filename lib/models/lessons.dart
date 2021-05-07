@@ -1,7 +1,17 @@
 import 'package:vocabulary_box/models/lesson.dart';
+import 'package:vocabulary_box/ui/utils/colors.dart';
 
 class Lessons {
   List<Lesson> lessons;
+
+  bool contains(String title) {
+    for (var lesson in lessons) {
+      if (lesson.title.startsWith(title)) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   Lessons(List<dynamic> lessons) {
     this.lessons = [];
