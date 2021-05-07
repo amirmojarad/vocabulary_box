@@ -3,7 +3,7 @@
 A Flutter application for storing new words.
 
 ## ✔️ Download
-Not Yet! Comming sood...
+Not Yet! Comming soon...
 
 ## 🚀 Features
 * Store Words in the form of lessons
