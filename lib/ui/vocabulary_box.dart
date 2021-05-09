@@ -16,6 +16,7 @@ class _VocabularyBoxState extends State<VocabularyBox> {
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData(),
       theme: ThemeData(
+        cardColor: colors.wordCard,
         backgroundColor: colors.background,
         accentColor: colors.accent,
         dividerColor: colors.divider,

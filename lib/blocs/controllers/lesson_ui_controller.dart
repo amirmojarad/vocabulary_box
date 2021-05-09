@@ -100,26 +100,18 @@ class LessonUIController {
           setState();
         },
         child: Container(
-          width: device.width,
-          height: 65,
           decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey, blurRadius: 10, offset: Offset(3, 2)),
-            ],
-            color: Color(0xff000F1C),
             borderRadius: BorderRadius.circular(10),
-            border:
-                Border.all(color: Theme.of(context).dividerColor, width: 0.5),
+            border: Border.all(color: Theme.of(context).cardColor, width: 0.9),
           ),
           child: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(word.word, style: Theme.of(context).textTheme.bodyText2),
+                Text(word.word, style: Theme.of(context).textTheme.bodyText1),
                 Text(word.meaningsToString(),
-                    style: Theme.of(context).textTheme.subtitle2),
+                    style: Theme.of(context).textTheme.subtitle1),
               ],
             ),
           ),
