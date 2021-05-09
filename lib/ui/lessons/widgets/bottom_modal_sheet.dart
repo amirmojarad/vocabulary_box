@@ -35,18 +35,15 @@ void buildBottomModalSheet(BuildContext context, Function setState) {
                     controller: controller.controller,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: colors.deActiveBorder),
-                          borderRadius: BorderRadius.circular(12)),
+                        borderSide: BorderSide(color: colors.deActiveBorder),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                       border: InputBorder.none,
-                      disabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: colors.activeBorder),
-                      ),
                       hintText: "Lesson Title",
-                      fillColor: Colors.red,
                       focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black54),
+                          borderSide: BorderSide(color: colors.activeBorder),
                           borderRadius: BorderRadius.circular(4)),
                     ),
                   ),
@@ -55,7 +52,6 @@ void buildBottomModalSheet(BuildContext context, Function setState) {
               Padding(
                 padding: EdgeInsets.only(
                   top: 8.0,
-                  // bottom: MediaQuery.of(context).viewInsets.bottom,
                 ),
                 child: GestureDetector(
                   onTap: () async => await controller.addNewLesson(context),
@@ -72,7 +68,7 @@ void buildBottomModalSheet(BuildContext context, Function setState) {
               topLeft: Radius.circular(18), topRight: Radius.circular(18)),
         ),
         width: device.width,
-        height: device.height / 3.5,
+        height: device.height / 4.5,
       );
     },
   );

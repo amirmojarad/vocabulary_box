@@ -27,3 +27,8 @@ const TextStyle headline1 = TextStyle(
     fontSize: 24,
     color: colors.textBlack,
     fontWeight: FontWeight.bold);
+const TextStyle headline6 = TextStyle(
+    fontFamily: 'PoppinsRegular',
+    fontSize: 16,
+    color: colors.shadowText,
+    fontWeight: FontWeight.w400);

@@ -9,4 +9,4 @@ const Color delete = Color(0xffb30303);
 const Color button = Color(0xff008f00);
 const Color activeBorder = Color(0xff72d03f);
 const Color deActiveBorder = Color(0xffd1efbf);
-
+const Color shadowText = Color(0xffadadad);
