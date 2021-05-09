@@ -81,60 +81,67 @@ class _LessonsUIState extends State<LessonsUI> {
     print(selected);
     device = Device(context);
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: buildFloatingButton(context, () {
         setState(() {});
       }),
       appBar: AppBar(
         actions: [
-          Center(
-            child: AnimatedContainer(
-              decoration: BoxDecoration(
-                  color: Color(0xffC0D0F0),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(18),
-                      bottomLeft: Radius.circular(18))),
-              width: selected ? 200.0 : 50.0,
-              height: 75.0,
-              alignment:
-                  selected ? Alignment.center : AlignmentDirectional.topCenter,
-              duration: const Duration(milliseconds: 900),
-              curve: Curves.fastOutSlowIn,
-              child: TextFormField(
-                controller: controller,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0, top: 5, bottom: 5),
+            child: Center(
+              child: AnimatedContainer(
+                decoration: BoxDecoration(
+                    color: Color(0xffC0D0F0),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(18),
+                    )),
+                width: selected ? 200.0 : 50.0,
+                height: 75.0,
+                alignment: selected
+                    ? Alignment.center
+                    : AlignmentDirectional.topCenter,
+                duration: const Duration(milliseconds: 900),
+                curve: Curves.fastOutSlowIn,
+                child: TextFormField(
+                  controller: controller,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(18),
+                          bottomLeft: Radius.circular(18)),
                     ),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(18),
-                        bottomLeft: Radius.circular(18)),
+                    border: InputBorder.none,
+                    // border: OutlineInputBorder(
+                    //   borderSide: BorderSide(color: Colors.transparent),
+                    //   borderRadius: BorderRadius.only(
+                    //       topLeft: Radius.circular(18),
+                    //       bottomLeft: Radius.circular(18)),
+                    // ),
+                    hintText: selected ? "Search..." : "",
+                    hintStyle: Theme.of(context).textTheme.subtitle1,
+                    suffixIcon: Icon(
+                      Icons.search,
+                      size: 28,
+                    ),
+                    contentPadding:
+                        EdgeInsets.only(left: 18, top: 16, bottom: 16),
                   ),
-                  border: InputBorder.none,
-                  // border: OutlineInputBorder(
-                  //   borderSide: BorderSide(color: Colors.transparent),
-                  //   borderRadius: BorderRadius.only(
-                  //       topLeft: Radius.circular(18),
-                  //       bottomLeft: Radius.circular(18)),
-                  // ),
-                  hintText: selected ? "Search..." : "",
-                  hintStyle: Theme.of(context).textTheme.subtitle1,
-                  suffixIcon: Icon(
-                    Icons.search,
-                    size: 28,
-                  ),
-                  contentPadding:
-                      EdgeInsets.only(left: 18, top: 16, bottom: 16),
+                  onChanged: (value) {
+                    setState(() {});
+                  },
+                  onTap: () {
+                    selected = !selected;
+                    if (!selected) {
+                      FocusScope.of(context).nextFocus();
+                    }
+                    setState(() {});
+                  },
+                  autofocus: false,
                 ),
-                onChanged: (value) {
-                  setState(() {});
-                },
-                onTap: () {
-                  // print(selected);
-                  selected = !selected;
-                  setState(() {});
-                },
-                autofocus: false,
               ),
             ),
           )
