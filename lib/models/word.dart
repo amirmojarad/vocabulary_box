@@ -9,10 +9,9 @@ class Word {
   String meaningsToString() {
     String result = "";
     meanings.forEach((element) {
-      result += element + "\n";
+      result += element + ", ";
     });
-    result.replaceRange(result.length - 2, result.length - 1, "");
-    if (meanings.length == 1) result.replaceAll(",", "\n");
+    result = result.substring(0, result.length - 2);
     return result;
   }
 

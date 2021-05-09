@@ -3,6 +3,7 @@ import 'package:vocabulary_box/blocs/lessons_bloc.dart';
 import 'package:vocabulary_box/models/lesson.dart';
 import 'package:vocabulary_box/models/lessons.dart';
 import 'package:vocabulary_box/models/word.dart';
+import 'package:vocabulary_box/ui/lesson/lesson_ui.dart';
 import 'package:vocabulary_box/ui/utils/colors.dart' as colors;
 import 'package:vocabulary_box/ui/utils/device.dart';
 
@@ -15,44 +16,56 @@ class _SearchUIState extends State<SearchUI> {
   TextEditingController controller = TextEditingController();
 
   Widget wordCardResult(Word word, Lesson lesson) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                "${word.word}",
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-              SizedBox(width: 11),
-              Text(" in ${lesson.title}",
-                  style: Theme.of(context).textTheme.headline6)
-            ],
-          ),
-          Text(
-            word.meaningsToString(),
-            style: Theme.of(context).textTheme.subtitle1,
-          )
-        ],
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(
+                  "${word.word}",
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                SizedBox(width: 11),
+                Text(" in ${lesson.title}",
+                    style: Theme.of(context).textTheme.headline6)
+              ],
+            ),
+            Text(
+              word.meaningsToString(),
+              style: Theme.of(context).textTheme.subtitle1,
+            )
+          ],
+        ),
       ),
     );
   }
 
   Widget lessonCardResult(Lesson lesson) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            lesson.title,
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
-          Text(
-            lesson.words.length.toString(),
-            style: Theme.of(context).textTheme.subtitle1,
-          )
-        ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => LessonUI(lesson),
+            ));
+      },
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              lesson.title,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+            Text(
+              lesson.words.length.toString(),
+              style: Theme.of(context).textTheme.subtitle1,
+            )
+          ],
+        ),
       ),
     );
   }
