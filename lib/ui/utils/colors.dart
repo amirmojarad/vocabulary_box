@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-const Color background = Color(0xffF9F9F9);
-const Color accent = Color(0xff00F45E);
-const Color divider = Color(0xff898C8C);
-const Color textBlack = Color(0xff090909);
-const Color textWhite = Color(0xffF4F4F4);
-const Color delete = Color(0xffD80A0A);
-const Color button = Color(0xff6AC3FA);
+const Color background = Color(0xfff2fee8);
+const Color accent = Color(0xff34b300);
+const Color divider = Color(0xff3c3c3c);
+const Color textBlack = Color(0xff1c1c1c);
+const Color textWhite = Color(0xfff2f2f2);
+const Color delete = Color(0xffb30303);
+const Color button = Color(0xff008f00);
+const Color activeBorder = Color(0xff72d03f);
+const Color deActiveBorder = Color(0xffd1efbf);
 
-const Color activeBorder = Color(0xff070808);
-const Color deActiveBorder = Color(0xff0F1111);

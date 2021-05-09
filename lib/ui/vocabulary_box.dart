@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:vocabulary_box/blocs/lessons_bloc.dart';
-import 'package:vocabulary_box/ui/lesson/lesson_ui.dart';
 import 'package:vocabulary_box/ui/lessons/lessons_ui.dart';
 import 'package:vocabulary_box/ui/utils/colors.dart' as colors;
 import 'package:vocabulary_box/ui/utils/fonts.dart' as fonts;
