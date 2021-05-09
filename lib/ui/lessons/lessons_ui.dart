@@ -14,12 +14,8 @@ class LessonsUI extends StatefulWidget {
 }
 
 class _LessonsUIState extends State<LessonsUI> {
-  bool selected = false;
-
-
   @override
   Widget build(BuildContext context) {
-    print(selected);
     device = Device(context);
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -39,19 +35,14 @@ class _LessonsUIState extends State<LessonsUI> {
                         builder: (context) => SearchUI(),
                       ));
                 },
-                child: AnimatedContainer(
+                child: Container(
                   decoration: BoxDecoration(
                       color: Theme.of(context).accentColor.withOpacity(0.4),
                       borderRadius: BorderRadius.all(
                         Radius.circular(18),
                       )),
-                  width: selected ? 200.0 : 50.0,
+                  width: 50,
                   height: 75.0,
-                  alignment: selected
-                      ? Alignment.center
-                      : AlignmentDirectional.topCenter,
-                  duration: const Duration(milliseconds: 900),
-                  curve: Curves.fastOutSlowIn,
                   child: Center(
                     child: Icon(Icons.search,
                         color: Theme.of(context).accentColor),
