@@ -24,7 +24,7 @@ class Serializable {
       _file = File(_fullPath);
       _rawJson = await _file.readAsString();
     } catch (e) {
-      save({"last_id": 0, "lessons": []});
+      await save({"last_id": 0, "lessons": []});
     }
   }
 
