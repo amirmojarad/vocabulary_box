@@ -1,3 +1,4 @@
+import 'package:vocabulary_box/models/lessons.dart';
 import 'package:vocabulary_box/services/json_provider.dart';
 import 'package:vocabulary_box/services/serializable.dart';
 
@@ -11,7 +12,11 @@ class LessonBloc {
   }
 
   Future<JsonProvider> fetch() async {
-    jsonProvider = await _serializable.load();
+    try{
+      jsonProvider = await _serializable.load();
+    }catch(_){
+      jsonProvider = JsonProvider(Lessons([]), false, 0);
+    }
     return jsonProvider;
   }
 

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -8,7 +9,6 @@ import 'json_provider.dart';
 
 class Serializable {
   String _fileName;
-  Directory _directory;
   String _fullPath;
   String _rawJson;
   File _file;
@@ -25,12 +25,17 @@ class Serializable {
       _rawJson = await _file.readAsString();
     } catch (e) {
       await save({"last_id": 0, "lessons": []});
+      throw 'file does not exist';
     }
   }
 
   Future<JsonProvider> load() async {
-    await _fetch();
-    return JsonProvider.fromJson(await jsonDecode(_rawJson));
+    try {
+      await _fetch();
+      return JsonProvider.fromJson(await jsonDecode(_rawJson));
+    } catch (_) {
+      throw 'load exception';
+    }
   }
 
   Future<void> save(Map<String, dynamic> json) async {
