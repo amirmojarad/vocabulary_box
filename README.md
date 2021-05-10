@@ -15,4 +15,9 @@ Not Yet! Comming soon...
 * Mobile App Developement
 * File Streaming
 
+## 📝 Todo
+* Leitner system
+* Multi Languages
+* speach to text
+* camera detection 
 
