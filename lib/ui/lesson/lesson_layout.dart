@@ -20,6 +20,8 @@ class _LessonLayoutState extends State<LessonLayout> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
+        width: device.width,
+        height: device.height,
         color: Theme.of(context).backgroundColor,
         child: SingleChildScrollView(
           child: Column(
@@ -34,12 +36,15 @@ class _LessonLayoutState extends State<LessonLayout> {
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 0, horizontal: 8),
-                        child: buildNewWordTextField(context,
-                            hintText: "New Word",
-                            node: controller.wordNode,
-                            controller: controller.controller, function: () {
-                          controller.next(context);
-                        }),
+                        child: buildNewWordTextField(
+                          context,
+                          hintText: "New Word",
+                          node: controller.wordNode,
+                          controller: controller.controller,
+                          function: () {
+                            controller.next(context);
+                          },
+                        ),
                       ),
                       Padding(
                         padding:
@@ -104,7 +109,12 @@ class _LessonLayoutState extends State<LessonLayout> {
       textInputAction: hintText.toLowerCase().contains("word")
           ? TextInputAction.next
           : TextInputAction.done,
-      onFieldSubmitted: (value) async => await function(),
+      onFieldSubmitted: hintText.toLowerCase().contains("word")
+          ? (value) => FocusScope.of(context).nextFocus()
+          : (value) async => await function(),
+      onEditingComplete: hintText.toLowerCase().contains("word")
+          ? () => FocusScope.of(context).nextFocus()
+          : () {},
       controller: controller,
       onChanged: (value) {
         setState(() {});

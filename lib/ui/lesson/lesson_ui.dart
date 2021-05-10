@@ -17,9 +17,11 @@ class LessonUI extends StatefulWidget {
 class _LessonUIState extends State<LessonUI> {
   var value = 0;
   LessonUIController controller = LessonUIController();
+  bool tapped;
 
   @override
   Widget build(BuildContext context) {
+    tapped = false;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -45,36 +47,18 @@ class _LessonUIState extends State<LessonUI> {
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                   content: Container(
-                    height: device.height - 700,
-                    width: device.width - 400,
+                    height: device.height / 7,
+                    // width: device.width - 400,
                     child: Center(
                       child: Column(
                         children: [
                           SizedBox(
+                            height: 50,
                             width: device.width,
                             child: Divider(),
                           ),
                           Row(
                             children: [
-                              GestureDetector(
-                                child: Text(
-                                  "Yes",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'PoppinsMedium',
-                                    color: Theme.of(context).accentColor,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                onTap: () async {
-                                  setState(() {
-                                    widget.lesson.words.clear();
-                                  });
-                                  await controller.save();
-                                  Navigator.pop(context);
-                                },
-                              ),
-                              Spacer(),
                               GestureDetector(
                                 onTap: () {
                                   Navigator.pop(context);
@@ -88,8 +72,42 @@ class _LessonUIState extends State<LessonUI> {
                                       fontSize: 18),
                                 ),
                               ),
+                              Spacer(),
+                              GestureDetector(
+                                child: Text(
+                                  "Yes",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'PoppinsMedium',
+                                    color: Theme.of(context).accentColor,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                onTap: () async {
+                                  widget.lesson.words.clear();
+                                  tapped = true;
+                                  setState(() {});
+                                  Navigator.pop(context);
+                                },
+                              ),
                             ],
                           ),
+                          tapped
+                              ? FutureBuilder(
+                                  future: controller.save(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      setState(() {});
+                                      Navigator.pop(context);
+                                    }
+                                    return Container(
+                                      child: Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    );
+                                  },
+                                )
+                              : Container()
                         ],
                       ),
                     ),
@@ -122,8 +140,7 @@ class _LessonUIState extends State<LessonUI> {
                         Navigator.pop(context);
                       }
                       return Container(
-                          height: device.height - 700,
-                          width: device.width - 400,
+                          height: device.height / 10,
                           child: Center(child: CircularProgressIndicator()));
                     },
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:vocabulary_box/blocs/lessons_bloc.dart';
 import 'package:vocabulary_box/models/lesson.dart';
 import 'package:vocabulary_box/models/word.dart';
@@ -12,11 +13,12 @@ class LessonUIController {
   Map<String, List<Word>> alphabeticMap;
 
   next(BuildContext context) {
-    FocusScope.of(context).requestFocus(meaningNode);
+    // FocusScope.of(context).requestFocus(meaningNode);
   }
 
-  Future<void> save() async {
+  Future<bool> save() async {
     await lessonBloc.save();
+    return true;
   }
 
   _generateAlphabetMap(Lesson lesson) {
@@ -100,6 +102,7 @@ class LessonUIController {
           setState();
         },
         child: Container(
+          width: device.width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: Theme.of(context).cardColor, width: 0.9),
@@ -143,12 +146,13 @@ class LessonUIController {
     }
     lessonBloc.jsonProvider.addLesson(lesson);
     meaningsController.clear();
+    controller.clear();
     await save();
+    FocusScope.of(context).nextFocus();
     function();
   }
 
   void addMeanings(BuildContext context, Lesson lesson, Function function) {
     addNewWord(context, lesson, function);
-    FocusScope.of(context).requestFocus(temp);
   }
 }
