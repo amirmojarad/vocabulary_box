@@ -20,4 +20,5 @@ Not Yet! Comming soon...
 * Multi Languages
 * speach to text
 * camera detection 
+* Dark Theme
 
