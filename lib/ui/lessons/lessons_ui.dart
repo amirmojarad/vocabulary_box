@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vocabulary_box/blocs/lessons_bloc.dart';
-import 'package:vocabulary_box/models/lesson.dart';
-import 'package:vocabulary_box/models/lessons.dart';
-import 'package:vocabulary_box/models/word.dart';
 import 'package:vocabulary_box/ui/lessons/lessons_layout.dart';
 import 'package:vocabulary_box/ui/lessons/widgets/floating_button.dart';
 import 'package:vocabulary_box/ui/search/search_ui.dart';

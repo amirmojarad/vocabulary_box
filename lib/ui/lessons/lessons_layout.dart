@@ -23,7 +23,7 @@ class _LessonsLayoutState extends State<LessonsLayout> {
             ? List.generate(
                 lessonBloc.jsonProvider.lessons.lessons.length,
                 (index) {
-                    return makeLessonCard(
+                  return makeLessonCard(
                     context,
                     lessonBloc.jsonProvider.lessons.lessons[index],
                   );
@@ -51,10 +51,11 @@ class _LessonsLayoutState extends State<LessonsLayout> {
       child: GestureDetector(
         onTap: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => LessonUI(lesson),
-              ));
+            context,
+            MaterialPageRoute(
+              builder: (context) => LessonUI(lesson),
+            ),
+          );
         },
         child: Container(
           color: Theme.of(context).backgroundColor,
