@@ -14,14 +14,14 @@ class _VocabularyBoxState extends State<VocabularyBox> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      darkTheme: ThemeData(),
+      darkTheme: ThemeData.dark(),
       theme: ThemeData(
         cardColor: colors.wordCard,
         backgroundColor: colors.background,
         accentColor: colors.accent,
         dividerColor: colors.divider,
         buttonColor: colors.button,
-        primaryIconTheme: IconThemeData(color: Color(0xffDBFDE8), size: 30),
+        primaryIconTheme: IconThemeData(color: colors.button),
         textTheme: TextTheme(
           headline6: fonts.headline6,
           subtitle1: fonts.subtitle1,

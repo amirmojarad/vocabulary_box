@@ -10,6 +10,8 @@ class LessonsUI extends StatefulWidget {
 }
 
 class _LessonsUIState extends State<LessonsUI> {
+  bool clearAll = false;
+
   @override
   Widget build(BuildContext context) {
     device = Device(context);
@@ -18,6 +20,56 @@ class _LessonsUIState extends State<LessonsUI> {
       floatingActionButton: buildFloatingButton(context, () {
         setState(() {});
       }),
+      drawer: Container(
+        width: device.width / 1.5,
+        height: device.height,
+        color: Theme.of(context).backgroundColor,
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(36.0),
+                child: ClipRRect(
+                  child: Image.asset('assets/icon/8.1.png'),
+                  borderRadius: BorderRadius.circular(28),
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                child: SizedBox(width: device.width, child: Divider()),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Row(
+                  children: [
+                    Text(
+                      "Clear All Lessons",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Switch(
+                        value: clearAll,
+                        onChanged: (bool value) {
+                          setState(() {
+                            clearAll = value;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Spacer(),
+              Text("Created by amirmojarad",
+                  style: Theme.of(context).textTheme.headline6)
+            ],
+          ),
+        ),
+      ),
       appBar: AppBar(
         actions: [
           Padding(

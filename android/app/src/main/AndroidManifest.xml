@@ -2,7 +2,7 @@
     package="com.amirmjrd.vocabulary_box">
    <application
         android:label="vocabulary_box"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

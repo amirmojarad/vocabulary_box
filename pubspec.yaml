@@ -10,8 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-
   cupertino_icons: ^1.0.2
   sqflite: ^2.0.0+3
   flutter_bloc: ^7.0.0
@@ -24,14 +22,17 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  flutter_launcher_icons: 0.9.0
+flutter_icons:
+  android: "launcher_icon"
+  image_path: "assets/icon/8.png"
 
 flutter:
-
   uses-material-design: true
-
   assets:
     - assets/lessons.json
+    - assets/icon/8.png
+    - assets/icon/8.1.png
 
   fonts:
     - family: PoppinsRegular
