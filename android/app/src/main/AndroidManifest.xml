@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.amirmjrd.vocabulary_box">
    <application
-        android:label="vocabulary_box"
+        android:label="Vocabulary Box"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"

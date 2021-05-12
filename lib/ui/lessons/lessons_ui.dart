@@ -31,7 +31,11 @@ class _LessonsUIState extends State<LessonsUI> {
               Padding(
                 padding: const EdgeInsets.all(36.0),
                 child: ClipRRect(
-                  child: Image.asset('assets/icon/8.1.png'),
+                  child: Image.asset(
+                    'assets/icon/8.1.png',
+                    width: device.width / 3,
+                    height: device.width / 3,
+                  ),
                   borderRadius: BorderRadius.circular(28),
                 ),
               ),

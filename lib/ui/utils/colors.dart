@@ -10,4 +10,4 @@ const Color button = Color(0xff371f76);
 const Color activeBorder = Color(0xff643b9f);
 const Color deActiveBorder = Color(0xff806A9F);
 const Color shadowText = Color(0xffadadad);
-const Color wordCard = Color(0xffb1e494);
+const Color wordCard = Color(0xff82568C);
