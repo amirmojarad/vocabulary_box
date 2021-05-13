@@ -41,6 +41,7 @@ void buildBottomModalSheet(BuildContext context, Function setState) {
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                       border: InputBorder.none,
+                      hintStyle: Theme.of(context).textTheme.subtitle1,
                       hintText: "Lesson Title",
                       focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: colors.activeBorder),

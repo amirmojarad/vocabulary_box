@@ -32,3 +32,9 @@ const TextStyle headline6 = TextStyle(
     fontSize: 16,
     color: colors.shadowText,
     fontWeight: FontWeight.w400);
+
+const TextStyle caption = TextStyle(
+    fontFamily: 'PoppinsMedium',
+    fontSize: 18,
+    color: colors.textWhite,
+    fontWeight: FontWeight.w600);

@@ -18,7 +18,7 @@ Widget buildFloatingButton(BuildContext context, Function setState) {
           padding: const EdgeInsets.all(10.0),
           child: Text(
             "Add New Lesson",
-            style: Theme.of(context).textTheme.bodyText2,
+            style: Theme.of(context).textTheme.caption,
           ),
         ),
       ),

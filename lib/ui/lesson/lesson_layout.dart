@@ -139,6 +139,7 @@ class _LessonLayoutState extends State<LessonLayout> {
         disabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: colors.activeBorder),
         ),
+        hintStyle: Theme.of(context).textTheme.subtitle1,
         hintText: hintText,
         fillColor: Colors.red,
         focusedBorder: OutlineInputBorder(
