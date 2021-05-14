@@ -17,84 +17,189 @@ class _LessonsLayoutState extends State<LessonsLayout> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).backgroundColor,
+      color: Theme
+          .of(context)
+          .backgroundColor,
       child: Column(
         children: lessonBloc.jsonProvider.lessons.lessons.length != 0
             ? List.generate(
-                lessonBloc.jsonProvider.lessons.lessons.length,
-                (index) {
-                  return makeLessonCard(
-                    context,
-                    lessonBloc.jsonProvider.lessons.lessons[index],
-                  );
-                },
-              )
+          lessonBloc.jsonProvider.lessons.lessons.length,
+              (index) {
+            return makeLessonCard(
+              context,
+              lessonBloc.jsonProvider.lessons.lessons[index],
+            );
+          },
+        )
             : [
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Text(
-                      "List is Empty",
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                  ),
-                ),
-              ],
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Text(
+                "List is Empty",
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .bodyText1,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Slidable makeLessonCard(BuildContext context, Lesson lesson) {
-    return Slidable(
-      actionPane: SlidableDrawerActionPane(),
-      actionExtentRatio: 0.25,
+  List<PopupMenuItem> generateItems(Lesson lesson) {
+    List<PopupMenuItem> result = [];
+    result.add(PopupMenuItem(
+      value: "Edit",
+      child: Text("Edit"),
+    ));
+    result.add(PopupMenuItem(
+      value: "Delete",
       child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => LessonUI(lesson),
-            ),
-          );
-        },
-        child: Container(
-          color: Theme.of(context).backgroundColor,
-          child: Column(
-            children: [
-              ListTile(
-                title: Text(
-                  lesson.title,
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                subtitle: Text(
-                  '${lesson.words.length} words',
-                  style: Theme.of(context).textTheme.subtitle1,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: device.width / 10, vertical: 0),
-                child: SizedBox(
-                  child: Divider(),
-                  width: device.width,
-                ),
-              )
-            ],
+        child: Text("Delete"),
+      ),
+    ));
+    return result;
+  }
+
+  Widget makeLessonCard(BuildContext context, Lesson lesson) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LessonUI(lesson),
           ),
+        );
+      },
+      child: Container(
+        width: device.width,
+        color: Theme
+            .of(context)
+            .backgroundColor,
+        child: Column(
+          children: [
+            ListTile(
+              title: Text(
+                lesson.title,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .bodyText1,
+              ),
+              subtitle: Text(
+                '${lesson.words.length} words',
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .subtitle1,
+              ),
+              trailing: PopupMenuButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
+                onSelected: (value) async {
+                  switch (value) {
+                    case "Delete":
+                      lessonBloc.jsonProvider.remove(lesson);
+                      await lessonBloc.save();
+                      setState(() {});
+                      SnackBar snackBar = SnackBar(content: Row(
+                        children: [
+                          Text("ASDASD"),
+                          //TODO add undo delete
+                          // Spacer(),
+                          // Icon(Icons.undo),
+                        ],
+                      ));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      break;
+                    case "Edit":
+                      showModalBottomSheet(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                        context: context,
+                        builder: (context) {
+                          return Container(
+                            width: device.width,
+                            height: device.height / 6,
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  width: device.width / 10,
+                                  child: Divider(
+                                    thickness: 1,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 0,
+                                      horizontal: 16,
+                                    ),
+                                    child: TextFormField(
+                                      decoration: InputDecoration(
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                            BorderRadius.circular(16),
+                                            borderSide: BorderSide(
+                                                color: Theme
+                                                    .of(context)
+                                                    .accentColor),
+                                          ),
+                                          hintText: "${lesson.title}"),
+                                      style:
+                                      Theme
+                                          .of(context)
+                                          .textTheme
+                                          .bodyText1,
+                                    ),
+                                  ),
+                                  flex: 3,
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Text(
+                                      "Edit",
+                                      style:
+                                      Theme
+                                          .of(context)
+                                          .textTheme
+                                          .subtitle1,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ).then((value) {
+
+                      });
+                      break;
+                  }
+                },
+                color: Theme
+                    .of(context)
+                    .backgroundColor,
+                child: Icon(Icons.more_horiz_outlined),
+                itemBuilder: (context) => generateItems(lesson),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: device.width / 10, vertical: 0),
+              child: SizedBox(
+                child: Divider(),
+                width: device.width,
+              ),
+            )
+          ],
         ),
       ),
-      secondaryActions: <Widget>[
-        IconSlideAction(
-          caption: 'Delete',
-          color: colors.delete,
-          icon: Icons.delete,
-          onTap: () async {
-            lessonBloc.jsonProvider.remove(lesson);
-            await lessonBloc.save();
-            setState(() {});
-          },
-        ),
-      ],
     );
   }
 }
