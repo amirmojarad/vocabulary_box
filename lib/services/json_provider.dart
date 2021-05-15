@@ -25,6 +25,10 @@ class JsonProvider {
     }
   }
 
+  void edit(Lesson lesson, String newTitle){
+    lessons.lessons[lessons.lessons.indexOf(lesson)].title = newTitle;
+  }
+
   Map<String, dynamic> toJson() => {
         "lessons": _lessons.toJson(),
         "first_opening": _firstOpening,

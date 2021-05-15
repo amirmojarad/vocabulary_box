@@ -17,34 +17,29 @@ class _LessonsLayoutState extends State<LessonsLayout> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme
-          .of(context)
-          .backgroundColor,
+      color: Theme.of(context).backgroundColor,
       child: Column(
         children: lessonBloc.jsonProvider.lessons.lessons.length != 0
             ? List.generate(
-          lessonBloc.jsonProvider.lessons.lessons.length,
-              (index) {
-            return makeLessonCard(
-              context,
-              lessonBloc.jsonProvider.lessons.lessons[index],
-            );
-          },
-        )
+                lessonBloc.jsonProvider.lessons.lessons.length,
+                (index) {
+                  return makeLessonCard(
+                    context,
+                    lessonBloc.jsonProvider.lessons.lessons[index],
+                  );
+                },
+              )
             : [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text(
-                "List is Empty",
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .bodyText1,
-              ),
-            ),
-          ),
-        ],
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      "List is Empty",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ),
+                ),
+              ],
       ),
     );
   }
@@ -76,25 +71,17 @@ class _LessonsLayoutState extends State<LessonsLayout> {
       },
       child: Container(
         width: device.width,
-        color: Theme
-            .of(context)
-            .backgroundColor,
+        color: Theme.of(context).backgroundColor,
         child: Column(
           children: [
             ListTile(
               title: Text(
                 lesson.title,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .bodyText1,
+                style: Theme.of(context).textTheme.bodyText1,
               ),
               subtitle: Text(
                 '${lesson.words.length} words',
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .subtitle1,
+                style: Theme.of(context).textTheme.subtitle1,
               ),
               trailing: PopupMenuButton(
                 shape: RoundedRectangleBorder(
@@ -105,17 +92,33 @@ class _LessonsLayoutState extends State<LessonsLayout> {
                       lessonBloc.jsonProvider.remove(lesson);
                       await lessonBloc.save();
                       setState(() {});
-                      SnackBar snackBar = SnackBar(content: Row(
-                        children: [
-                          Text("ASDASD"),
-                          //TODO add undo delete
-                          // Spacer(),
-                          // Icon(Icons.undo),
-                        ],
-                      ));
+                      SnackBar snackBar = SnackBar(
+                        backgroundColor: Theme.of(context).accentColor,
+                        content: Container(
+                          height: device.height / 16,
+                          child: Row(
+                            children: [
+                              Text("ASDASD"),
+                              //TODO add undo delete
+                              Spacer(),
+                              IconButton(
+                                icon:
+                                    Icon(Icons.undo_sharp, color: Colors.white),
+                                onPressed: () async {
+                                  lessonBloc.jsonProvider.addLesson(lesson);
+                                  await lessonBloc.save();
+                                  setState(() {});
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       break;
                     case "Edit":
+                      TextEditingController editController =
+                          TextEditingController();
                       showModalBottomSheet(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12)),
@@ -139,21 +142,18 @@ class _LessonsLayoutState extends State<LessonsLayout> {
                                       horizontal: 16,
                                     ),
                                     child: TextFormField(
+                                      controller: editController,
                                       decoration: InputDecoration(
                                           enabledBorder: OutlineInputBorder(
                                             borderRadius:
-                                            BorderRadius.circular(16),
+                                                BorderRadius.circular(16),
                                             borderSide: BorderSide(
-                                                color: Theme
-                                                    .of(context)
+                                                color: Theme.of(context)
                                                     .accentColor),
                                           ),
                                           hintText: "${lesson.title}"),
                                       style:
-                                      Theme
-                                          .of(context)
-                                          .textTheme
-                                          .bodyText1,
+                                          Theme.of(context).textTheme.bodyText1,
                                     ),
                                   ),
                                   flex: 3,
@@ -162,13 +162,19 @@ class _LessonsLayoutState extends State<LessonsLayout> {
                                   flex: 2,
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: 8.0),
-                                    child: Text(
-                                      "Edit",
-                                      style:
-                                      Theme
-                                          .of(context)
-                                          .textTheme
-                                          .subtitle1,
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        lessonBloc.jsonProvider
+                                            .edit(lesson, editController.text);
+                                        await lessonBloc.save();
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(
+                                        "Edit",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -177,14 +183,12 @@ class _LessonsLayoutState extends State<LessonsLayout> {
                           );
                         },
                       ).then((value) {
-
+                        setState(() {});
                       });
                       break;
                   }
                 },
-                color: Theme
-                    .of(context)
-                    .backgroundColor,
+                color: Theme.of(context).backgroundColor,
                 child: Icon(Icons.more_horiz_outlined),
                 itemBuilder: (context) => generateItems(lesson),
               ),
