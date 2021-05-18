@@ -11,23 +11,37 @@ void buildBottomModalSheet(BuildContext context, Function setState) {
     isScrollControlled: true,
     builder: (context) {
       return Container(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Text(
-                "Add New Lesson",
-                style: Theme.of(context).textTheme.bodyText1,
+        child: Column(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Column(
+                children: [
+                  SizedBox(
+                      child: Divider(
+                        thickness: 1,
+                      ),
+                      height: 10,
+                      width: 50),
+                  Text(
+                    "Add New Lesson",
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 28.0, vertical: 0),
+                    child: SizedBox(
+                      child: Divider(),
+                      width: device.width,
+                    ),
+                  ),
+                ],
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 28.0, vertical: 8),
-                child: SizedBox(
-                  child: Divider(),
-                  width: device.width,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            ),
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
                 child: Container(
                   child: TextFormField(
                     onFieldSubmitted: (value) async =>
@@ -50,7 +64,10 @@ void buildBottomModalSheet(BuildContext context, Function setState) {
                   ),
                 ),
               ),
-              Padding(
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
                 padding: EdgeInsets.only(
                   top: 8.0,
                 ),
@@ -60,8 +77,8 @@ void buildBottomModalSheet(BuildContext context, Function setState) {
                       Text("Add", style: Theme.of(context).textTheme.bodyText1),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
         decoration: BoxDecoration(
           color: Theme.of(context).backgroundColor,

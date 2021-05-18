@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:vocabulary_box/blocs/lessons_bloc.dart';
 import 'package:vocabulary_box/models/lesson.dart';
 import 'package:vocabulary_box/ui/lesson/lesson_ui.dart';
 import 'package:vocabulary_box/ui/utils/device.dart';
-import 'package:vocabulary_box/ui/utils/colors.dart' as colors;
 
 class LessonsLayout extends StatefulWidget {
   @override
